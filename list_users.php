@@ -32,6 +32,7 @@ $users = $userModel->getUsers($params);
                         <th scope="col">ID</th>
                         <th scope="col">Username</th>
                         <th scope="col">Fullname</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Type</th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -41,13 +42,16 @@ $users = $userModel->getUsers($params);
                         <tr>
                             <th scope="row"><?php echo $user['id']?></th>
                             <td>
-                                <?php echo $user['name']?>
+                                <?php echo htmlentities($user['name'])?>
                             </td>
                             <td>
-                                <?php echo $user['fullname']?>
+                                <?php echo htmlentities($user['fullname'])?>
                             </td>
                             <td>
-                                <?php echo $user['type']?>
+                                <?php echo htmlentities($user['email'])?>
+                            </td>
+                            <td>
+                                <?php echo htmlentities($user['type'])?>
                             </td>
                             <td>
                                 <a href="form_user.php?id=<?php echo $user['id'] ?>">
