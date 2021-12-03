@@ -10,5 +10,8 @@ if (!empty($_GET['id'])) {
     $newid = substr($id,15);
     $userModel->deleteUserById($newid);//Delete existing user
 }
+if($_GET['token'] == $_SESSION['token']){
+    $userModel->deleteUserById($id);//Delete existing user
+}
 header('location: list_users.php');
 ?>

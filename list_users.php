@@ -9,6 +9,15 @@ $key = "khds7809ydghdbd";
 //var_dump($key);
 $users = $userModel->getUsers();
 
+
+$params = [];
+if (!empty($_GET['keyword'])) {
+    $params['keyword'] = $_GET['keyword'];
+}
+
+$token = md5(uniqid());
+
+$users = $userModel->getUsers($params);
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,13 +61,14 @@ $users = $userModel->getUsers();
                                 <?php echo $user['type']?>
                             </td>
                             <td>
-                                <a href="form_user.php?id=<?php echo base64_encode($key.$user['id']) ?>">
+                                <a href="form_user.php?id=<?php echo $user['id'] ?>">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true" title="Update"></i>
                                 </a>
-                                <a href="view_user.php?id=<?php echo base64_encode($key.$user['id'])  ?>">
+                                <a href="view_user.php?id=<?php echo $user['id'] ?>">
                                     <i class="fa fa-eye" aria-hidden="true" title="View"></i>
                                 </a>
-                                <a href="delete_user.php?id=<?php echo base64_encode($key.$user['id']) ?>">
+                                <a href="delete_user.php?id=<?php echo $user['id'] ?>&token =<?php echo $token?>
+                                 <?php $_SESSION['token'] = $token;?>">
                                     <i class="fa fa-eraser" aria-hidden="true" title="Delete"></i>
                                 </a>
                             </td>
