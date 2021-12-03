@@ -42,6 +42,9 @@ if (!empty($_POST['submit'])) {
                 </div>
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php if(!empty($newid)){echo $newid;}else{echo $id;}?>">
+                    <?php var_dump($$newid));
+                    
+                    ?>
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input class="form-control" name="name" placeholder="Name" value='<?php if (!empty($user[0]['name'])) echo $user[0]['name'] ?>'>
