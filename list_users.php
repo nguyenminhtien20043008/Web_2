@@ -10,6 +10,8 @@ if (!empty($_GET['keyword'])) {
     $params['keyword'] = $_GET['keyword'];
 }
 
+$token = md5(uniqid());
+
 $users = $userModel->getUsers($params);
 ?>
 <!DOCTYPE html>
