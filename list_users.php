@@ -49,16 +49,16 @@ $users = $userModel->getUsers($params);
                         <tr>
                             <th scope="row"><?php echo $user['id']?></th>
                             <td>
-                                <?php echo $user['name']?>
+                                <?php echo htmlentities($user['name'])?>
                             </td>
                             <td>
-                                <?php echo $user['fullname']?>
+                                <?php echo htmlentities($user['fullname'])?>
                             </td>
                             <td>
-                                <?php echo $user['email']?>
+                                <?php echo htmlentities($user['email'])?>
                             </td>
                             <td>
-                                <?php echo $user['type']?>
+                                <?php echo htmlentities($user['type'])?>
                             </td>
                             <td>
                                 <a href="form_user.php?id=<?php echo $user['id'] ?>">
@@ -67,8 +67,7 @@ $users = $userModel->getUsers($params);
                                 <a href="view_user.php?id=<?php echo $user['id'] ?>">
                                     <i class="fa fa-eye" aria-hidden="true" title="View"></i>
                                 </a>
-                                <a href="delete_user.php?id=<?php echo $user['id'] ?>&token =<?php echo $token?>
-                                 <?php $_SESSION['token'] = $token;?>">
+                                <a href="delete_user.php?id=<?php echo $user['id'] ?>">
                                     <i class="fa fa-eraser" aria-hidden="true" title="Delete"></i>
                                 </a>
                             </td>
