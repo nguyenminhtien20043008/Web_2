@@ -7,17 +7,15 @@ $userModel = new UserModel();
 $user = NULL; //Add new user
 $_id = NULL;
 
-if (!empty($_GET['id'])) { 
-    $id = base64_decode($_GET['id']);
-    $newid = substr($id,15);
-    // var_dump($newid);die();
-    $user = $userModel->findUserById($newid);//Update existing user
+if (!empty($_GET['id'])) {
+    $_id = $_GET['id'];
+    $user = $userModel->findUserById($_id);//Update existing user
 }
 
 
 if (!empty($_POST['submit'])) {
 
-    if (!empty($newid)) {
+    if (!empty($_id)) {
         $userModel->updateUser($_POST);
     } else {
         $userModel->insertUser($_POST);
@@ -36,12 +34,13 @@ if (!empty($_POST['submit'])) {
     <?php include 'views/header.php'?>
     <div class="container">
 
-            <?php if ($user || !isset($newid)) { ?>
+            <?php if ($user || !isset($_id)) { ?>
                 <div class="alert alert-warning" role="alert">
                     User form
                 </div>
                 <form method="POST">
-                    <input type="hidden" name="id" value="<?php if(!empty($newid)){echo $newid;}else{echo $id;}?>">
+                <input type="hidden" name="id" value="<?php  if (!empty($user[0]['id'])) echo $user[0]['id']?>">
+                <input type="hidden" name="version" value="<?php  if (!empty($user[0]['version'])) echo $user[0]['version']?>">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input class="form-control" name="name" placeholder="Name" value='<?php if (!empty($user[0]['name'])) echo $user[0]['name'] ?>'>

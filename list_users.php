@@ -4,18 +4,11 @@ session_start();
 
 require_once 'models/UserModel.php';
 $userModel = new UserModel();
-//update idor
-$key = "khds7809ydghdbd";
-//var_dump($key);
-$users = $userModel->getUsers();
-
 
 $params = [];
 if (!empty($_GET['keyword'])) {
     $params['keyword'] = $_GET['keyword'];
 }
-
-$token = md5(uniqid());
 
 $users = $userModel->getUsers($params);
 ?>
@@ -49,16 +42,16 @@ $users = $userModel->getUsers($params);
                         <tr>
                             <th scope="row"><?php echo $user['id']?></th>
                             <td>
-                                <?php echo htmlentities($user['name'])?>
+                                <?php echo $user['name']?>
                             </td>
                             <td>
-                                <?php echo htmlentities($user['fullname'])?>
+                                <?php echo $user['fullname']?>
                             </td>
                             <td>
-                                <?php echo htmlentities($user['email'])?>
+                                <?php echo $user['email']?>
                             </td>
                             <td>
-                                <?php echo htmlentities($user['type'])?>
+                                <?php echo $user['type']?>
                             </td>
                             <td>
                                 <a href="form_user.php?id=<?php echo $user['id'] ?>">
