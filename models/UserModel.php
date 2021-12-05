@@ -33,6 +33,7 @@ class UserModel extends BaseModel {
      */
     public function deleteUserById($id) {
         $sql = 'DELETE FROM users WHERE id = '.$id;
+      //  var_dump($sql);die();
         return $this->delete($sql);
 
     }
