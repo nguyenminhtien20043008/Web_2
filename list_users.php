@@ -1,15 +1,17 @@
 <?php
 // Start the session
 session_start();
+//1-b
+require_once 'models/FactoryPattern.php';
+$factory = new FactoryPattern();
 
-require_once 'models/UserModel.php';
-$userModel = new UserModel();
+$userModel = $factory->make('user');
 
 $params = [];
 if (!empty($_GET['keyword'])) {
     $params['keyword'] = $_GET['keyword'];
 }
-
+//feature 1-a
 $users = $userModel->getUsers($params);
 ?>
 <!DOCTYPE html>
@@ -32,7 +34,6 @@ $users = $userModel->getUsers($params);
                         <th scope="col">ID</th>
                         <th scope="col">Username</th>
                         <th scope="col">Fullname</th>
-                        <th scope="col">Email</th>
                         <th scope="col">Type</th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -46,9 +47,6 @@ $users = $userModel->getUsers($params);
                             </td>
                             <td>
                                 <?php echo $user['fullname']?>
-                            </td>
-                            <td>
-                                <?php echo $user['email']?>
                             </td>
                             <td>
                                 <?php echo $user['type']?>
