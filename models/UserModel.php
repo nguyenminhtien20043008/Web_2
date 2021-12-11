@@ -49,6 +49,10 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function updateUser($input) {
+        $bankModel = new BankModle();
+        if($input['user_id'] != null){
+            $bankModel->updateBank($input);
+        }else{
         $sql = 'UPDATE users SET 
                  name = "' . mysqli_real_escape_string(self::$_connection, $input['name']) .'", 
                  password="'. md5($input['password']) .'"
@@ -58,6 +62,7 @@ class UserModel extends BaseModel {
 
         return $user;
     }
+    }
 
     /**
      * Insert user
@@ -65,12 +70,17 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function insertUser($input) {
+        $bankModel = new BankModle();
+        if($input['user_id'] != null){
+            $bankModel->insertBank($input);
+        }else{
         $sql = "INSERT INTO `app_web1`.`users` (`name`, `password`) VALUES (" .
                 "'" . $input['name'] . "', '".md5($input['password'])."')";
 
         $user = $this->insert($sql);
 
         return $user;
+    }
     }
 
     /**
