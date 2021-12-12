@@ -18,8 +18,14 @@ class UserModel extends BaseModel {
         return $user;
     }
 
+    /**
+     * Authentication user
+     * @param $userName
+     * @param $password
+     * @return array
+     */
     public function auth($userName, $password) {
-        $md5Password = $password;
+        $md5Password = md5($password);
         $sql = 'SELECT * FROM users WHERE name = "' . $userName . '" AND password = "'.$md5Password.'"';
 
         $user = $this->select($sql);
@@ -43,6 +49,7 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function updateUser($input) {
+<<<<<<< HEAD
         // var_dump($input);die();
         $temp = 'SELECT version FROM users WHERE id ='.$input['id'].'';
         $newtemp = $this->select($temp);
@@ -62,6 +69,14 @@ class UserModel extends BaseModel {
         //  var_dump($user);die();
          header('location:list_users.php');
          return user;
+=======
+        $sql = 'UPDATE users SET 
+                 name = "' . mysqli_real_escape_string(self::$_connection, $input['name']) .'", 
+                 password="'. md5($input['password']) .'"
+                WHERE id = ' . $input['id'];
+
+        $user = $this->update($sql);
+>>>>>>> Factory
 
         }
         else{
@@ -74,8 +89,8 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function insertUser($input) {
-        $sql = "INSERT INTO `app_web1`.`users` (`name`, `fullname`, `email`, `type`, `password`) VALUES (" .
-                "'" . $input['name'] . "', '".$input['fullname']."', '".$input['email']."', '".$input['type']."', '".$input['password']."')";
+        $sql = "INSERT INTO `app_web1`.`users` (`name`, `password`) VALUES (" .
+                "'" . $input['name'] . "', '".md5($input['password'])."')";
 
         $user = $this->insert($sql);
 
@@ -93,11 +108,20 @@ class UserModel extends BaseModel {
             $params['keyword'] = $this->removeSpecialCharacter($params['keyword']);
 
             $sql = 'SELECT * FROM users WHERE name LIKE "%' . $params['keyword'] .'%"';
+<<<<<<< HEAD
             $users = $this->select($sql);
+=======
+
+            //Keep this line to use Sql Injection
+            //Don't change
+            //Example keyword: abcef%";TRUNCATE banks;##
+            $users = self::$_connection->multi_query($sql);
+>>>>>>> Factory
         } else {
             $sql = 'SELECT * FROM users';
             $users = $this->select($sql);
         }
+<<<<<<< HEAD
         return $users;
     }
     public function removeSpecialCharacter($string)
@@ -105,5 +129,17 @@ class UserModel extends BaseModel {
         $array = ["'",'"',"<",">","*","","!","/","%",";","#"];
         $string = str_replace($array,'',$string);
         return $string;
+=======
+
+        return $users;
+    }
+
+    public static function getInstance() {
+        if (self::$_instance !== null){
+            return self::$_instance;
+        }
+        self::$_instance = new self();
+        return self::$_instance;
+>>>>>>> Factory
     }
 }
