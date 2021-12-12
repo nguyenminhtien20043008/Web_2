@@ -17,9 +17,10 @@ class UserModel extends BaseModel {
 
     public function findUser($keyword) {
         if(is_string($keyword)&& $keyword != null){
-            //  var_dump(is_string($keyword));die();
-        $sql = 'SELECT * FROM users WHERE user_name LIKE %'.$keyword.'%'. ' OR user_email LIKE %'.$keyword.'%';
+        //   var_dump(is_string($keyword));die();
+        $sql = "SELECT * FROM users WHERE name LIKE '".$keyword. "'" . " OR email LIKE " .$keyword;
         $user = $this->select($sql);
+        //var_dump( $sql);die();
 
         return $user;
     }else{
@@ -41,8 +42,13 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function deleteUserById($id) {
-        $sql = 'DELETE FROM users WHERE id = '.$id;
-        return $this->delete($sql);
+        if(!is_null($id) && $id > 0 &&
+            !is_array($id) && !is_bool($id) && !is_string($id)){
+            $sql = 'DELETE FROM users WHERE id = '.$id;
+            return $this->delete($sql);
+        }else{
+            return false;
+        }
 
     }
 
@@ -52,7 +58,12 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function updateUser($input) {
-        $sql = 'UPDATE users SET 
+        if(!is_null($input["name"]) &&
+        !is_int($input["name"]) &&
+        !is_bool($input["name"]) &&
+        !is_array($input["name"]) &&
+        !is_object($input["name"])){
+             $sql = 'UPDATE users SET 
                  name = "' . $input['name'] .'", 
                  fullname = "' . $input['fullname'] .'",
                  email = "' . $input['email'] .'",
@@ -62,6 +73,10 @@ class UserModel extends BaseModel {
         $user = $this->update($sql);
 
         return $user;
+        }else{
+            return false;
+        }
+       
     }
 
     /**
@@ -70,12 +85,20 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function insertUser($input) {
-        $sql = "INSERT INTO `app_web1`.`users` (`name`, `fullname`, `email`, `type`, `password`) VALUES (" .
-                "'" . $input['name'] . "', '".$input['fullname']."', '".$input['email']."', '".$input['type']."', '".$input['password']."')";
+        if(!is_null($input["name"]) &&
+        !is_int($input["name"]) &&
+        !is_bool($input["name"]) &&
+        !is_array($input["name"]) &&
+        !is_object($input["name"])){       
+            $sql = "INSERT INTO `app_web1`.`users` (`name`, `fullname`, `email`, `type`, `password`) VALUES (" .
+                    "'" . $input['name'] . "', '".$input['fullname']."', '".$input['email']."', '".$input['type']."', '".$input['password']."')";
 
-        $user = $this->insert($sql);
+            $user = $this->insert($sql);
 
-        return $user;
+            return $user;
+        }else{
+            return false;
+        }
     }
 
     /**
